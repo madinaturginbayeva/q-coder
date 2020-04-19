@@ -1,7 +1,0 @@
-# Text backup files
-*.bak
-
-#Database
-*.sqlite3
-
-qcoder_venv
