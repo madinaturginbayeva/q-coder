@@ -1,0 +1,74 @@
+{% extends "qmain/base.html" %}
+{% block content %}
+
+<div class="container-fluid mt-5">
+
+  <!-- Heading -->
+  <div class="card mb-4 wow fadeIn">
+
+    <!--Card content-->
+    <div class="card-body d-sm-flex justify-content-between">
+
+      <h4 class="mb-2 mb-sm-0 pt-1">
+        {% if title %}
+        <span>{{ title }}</span>
+        {% endif %}
+      </h4>
+
+      <form class="d-flex justify-content-center">
+       <button class="btn btn-primary btn-sm my-0 p" type="submit" style="font-size: 14px; font-weight: 700;">
+          ADD
+        </button>
+      </form>
+
+    </div>
+
+  </div>
+  <!-- Heading -->
+
+  <!--Grid row-->
+  <div class="row wow fadeIn">
+
+    <!--Grid column-->
+    <div class="col-md-9 mb-4">
+      
+      <!--Grid row-->
+      <div class="row">
+        
+        {% for course in courses %}
+        <!--Grid column-->
+        <div class="col-md-6 mb-4">
+
+          <!-- Card -->
+          <div class="card gradient-card">
+
+              <div class="card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
+
+                <!-- Content -->
+                <a href="{% url 'course' %}">
+                  <div class="text-white d-flex h-100 mask aqua-gradient-rgba">
+                    <div class="first-content align-self-center p-3">
+                      <h3 class="card-title">{{ course.name }}</h3>
+                      <p class="lead mb-0">{{ course.code }}</p>
+                    </div>
+                  </div>
+                </a>
+
+              </div>
+          </div>
+          <!-- Card -->
+
+        </div>
+        <!--Grid column-->
+        {% endfor %}
+
+      </div>
+      <!--Grid row-->
+    </div>
+    <!--Grid column-->
+
+  </div>
+  <!--Grid row-->
+
+</div>
+{% endblock content %}
