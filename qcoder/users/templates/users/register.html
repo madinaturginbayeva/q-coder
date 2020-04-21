@@ -1,64 +1,24 @@
-{% load static %}
+{% extends "users/base.html" %}
 {% load crispy_forms_tags %}
-<!DOCTYPE html>
-<html>
-<head>
-
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'main/bootstrap.min.css'  %}" rel="stylesheet">
-    <!-- Material Design Bootstrap -->
-    <link href="{% static 'main/mdb.min.css' %}" rel="stylesheet">
-    <!-- Your custom styles (optional) -->
-    <link href="{% static 'main/style.min.css' %}" rel="stylesheet">
-
-    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
-    
-    {% if title %}
-        <title>Django Blog - {{ title }}</title>
-    {% else %}
-        <title>Django Blog</title>
-    {% endif %}
-    <style>
-      body{
-        font-family: 'Roboto', sans-serif;
-      }
-    </style>
-</head>
-<body>
-        <main role="main"  class="container-fluid" style="padding: 20px;"> 
-          <div class="row">  
-            <div class="col-sm"></div>
-            <div class="col-sm">
-              <form class="border border-light p-5" method="POST">
-                {% csrf_token %}
-                <p class="h4 mb-4 text-center">Sign up</p>
-                {{form|crispy}}
-                <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
-            
-                <div class="text-center">
-                    <hr>
-                    <p>By clicking
-                        <em>Sign up</em> you agree to our
-                        <a href="" target="_blank">terms of service</a> and
-                        <a href="" target="_blank">terms of service</a>.
-                    </p>
-                </div>
-              </form>
-            </div>
-            <div class="col-sm"></div>
-          </div>
-        </main>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-</body>
-</html>
+{% block content %}
+<div class="row">  
+  <div class="col-sm"></div>
+  <div class="col-sm">
+      <form class="border border-light p-5" method="POST">
+      {% csrf_token %}
+      <p class="h4 mb-4 text-center">Sign up</p>
+      {{form|crispy}}
+      <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
+      <div class="text-center">
+          <hr>
+          <p>By clicking
+              <em>Sign up</em> you agree to our
+              <a href="" target="_blank">terms of service</a> and
+              <a href="" target="_blank">terms of service</a>.
+          </p>
+      </div>
+      </form>
+  </div>
+  <div class="col-sm"></div>
+</div>
+{% endblock content %}

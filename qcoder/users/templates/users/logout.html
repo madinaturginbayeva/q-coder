@@ -1,0 +1,16 @@
+{% extends "users/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">  
+    <div class="col-sm"></div>
+    <div class="col-sm">
+        <form class="border border-light p-5">
+        <h5>You have been sign out!</h5>
+        <small class="text-muted">
+            <a href="{% url 'login' %}">Sign In Again</a>
+        </small>
+        </form>
+    </div>
+    <div class="col-sm"></div>
+</div>
+{% endblock content %}
