@@ -78,8 +78,12 @@ WSGI_APPLICATION = 'qcoder.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dckhsgcrj5cfn7',
+        'USER': 'fftqpdsqdkdfve',
+        'PASSWORD': '10ecf824d3c9e84e1be971cd3fe4ad3cd16351d6ccacb7574a7419c2bb642de5',
+        'HOST': 'ec2-3-229-210-93.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
