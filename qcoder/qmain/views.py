@@ -12,7 +12,7 @@ def assignments(request):
     return render(request, 'qmain/assignments.html', {'title':'Assignments'})
 
 def students(request):
-    return render(request, 'qmain/students.html', {'title':'Students'})
+    return render(request, 'qmain/students.html', {'title':'Student'})
 
 def course(request):
     return render(request, 'qmain/course.html', {'title':'Course'})
