@@ -1,6 +1,9 @@
 from django.shortcuts import render
 from .models import Course
 
+def main(request):
+    return render(request, 'qmain/landing.html')
+
 def courses(request):
     context = {
         'courses' : Course.objects.all(),
