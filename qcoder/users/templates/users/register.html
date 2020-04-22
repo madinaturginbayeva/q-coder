@@ -7,7 +7,16 @@
       <form class="border border-light p-5" method="POST">
       {% csrf_token %}
       <p class="h4 mb-4 text-center">Sign up</p>
-      {{form|crispy}}
+      <!-- {{form|crispy}} -->
+        {% for field in form %}
+        <p>
+            {{ field.label_tag }}<br>
+            {{ field }}
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+        </p>
+        {% endfor %}
       <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
       <div class="text-center">
           <hr>

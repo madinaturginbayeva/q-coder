@@ -1,4 +1,5 @@
 {% load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +9,7 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>Landing Page</title>
   <!-- Font Awesome -->
-  <link rel="stylesheet" href="{% static 'https://use.fontawesome.com/releases/v5.11.2/css/all.css' %}">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
   <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
   <!-- Material Design Bootstrap -->
@@ -56,7 +57,7 @@
 
       <!-- Brand -->
       <a class="navbar-left"><img src="{% static 'img/logo3.png' %}" style="width:30px"></a>
-      <a class="navbar-brand" href="{% static 'https://mdbootstrap.com/docs/jquery/' %}'" target="_blank">
+      <a class="navbar-brand" href="https://mdbootstrap.com/docs/jquery/" target="_blank">
         <strong>Q-coder</strong><!--logo-->
       </a>
 
@@ -77,14 +78,17 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% static 'https://mdbootstrap.com/docs/jquery/' %}'" target="_blank">About Us</a>
+            <a class="nav-link" href="https://mdbootstrap.com/docs/jquery/" target="_blank">About Us</a>
           </li>
         </ul>
 
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
           <li class="nav-item">
-            <a class="nav-link" href="{% static 'https://mdbootstrap.com/docs/jquery/' %}'" target="_blank">Sign In</a>
+            <a class="nav-link" href="{% url 'login' %}">Sign In</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'register' %}">Sign Up</a>
           </li>
         </ul>
 
@@ -109,7 +113,7 @@
           <!--Grid column-->
           <div class="col-md-6 mb-4 white-text text-center text-md-left">
 
-            <h1 class="display-4 font-weight-bold" style="margin-top: 50px">Submit & Grade Fast With Q-coder</h1>
+            <h1 class="display-4 font-weight-bold" style="margin-top: 100px">Submit & Grade Fast With Q-coder</h1>
 
            
 
@@ -117,7 +121,7 @@
           <!--Grid column-->
 
           <!--Grid column-->
-          <div class="col-md-6 col-xl-5 mb-4" style="margin-top: 70px">
+          <div class="col-md-6 col-xl-5 mb-4" style="margin-top: 100px">
 
             <!--Card-->
             <div class="card">
@@ -126,50 +130,21 @@
               <div class="card-body">
 
                 <!-- Form -->
-                <form name="signUp">
-                  <!-- Heading -->
-                  <h3 class="dark-grey-text text-center">
-                    <strong>Sign Up</strong>
-                  </h3>
-                  <hr>
-
-                  <div class="md-form">
-                    <i class="fas fa-user prefix grey-text"></i>
-                    <input type="text" id="form3" class="form-control">
-                    <label for="form3">Your Name</label>
-                  </div>
-                   <div class="md-form">
-                    <i class="fas fa-user prefix grey-text"></i>
-                    <input type="text" id="form1" class="form-control">
-                    <label for="form1">Your Surname</label>
-                  </div>
-                  <div class="md-form">
-                    <i class="fas fa-envelope prefix grey-text"></i>
-                    <input type="text" id="form2" class="form-control">
-                    <label for="form2">Your School Email</label>
-                  </div>
-                  <div class="md-form">
-                  <i class="fas fa-lock prefix grey-text"></i>
-                  <input type="password" id="inputValidationEx2" class="form-control validate">
-                  <label for="inputValidationEx2" data-error="wrong" data-success="right">Your Password</label>
-                </div>
-                  <!-- Default inline 1-->
-                  <div class="custom-control custom-radio custom-control-inline" style="margin-left: 35px">
-                    <input type="radio" class="custom-control-input" id="defaultInline1" name="inlineDefaultRadiosExample">
-                    <label class="custom-control-label" for="defaultInline1">Teacher</label>
-                  </div>
-
-                  <!-- Default inline 2-->
-                  <div class="custom-control custom-radio custom-control-inline" >
-                    <input type="radio" class="custom-control-input" id="defaultInline2" name="inlineDefaultRadiosExample">
-                    <label class="custom-control-label" for="defaultInline2">Student</label>
-                  </div>
-
-                  <div class="text-center">
-                    <button class="btn btn-indigo">Sign Up</button>
-                  </div>
-
-                </form>
+                <form method="POST">
+                  {% csrf_token %}
+                  <p class="h5 mb-4 text-center">Sign up</p>
+                  <!-- {{form|crispy}} -->
+                    {% for field in form %}
+                    <p>
+                        {{ field.label_tag }}<br>
+                        {{ field }}
+                        {% for error in field.errors %}
+                        <p style="color: red">{{ error }}</p>
+                        {% endfor %}
+                    </p>
+                    {% endfor %}
+                    <button class="btn btn-info my-4 btn-block" type="submit">Sign up</button>
+                  </form>
                 <!-- Form -->
 
               </div>
@@ -589,7 +564,7 @@
     <!--Copyright-->
     <div class="footer-copyright py-3">
       © 2020 Copyright:
-      <a href="{% static 'https://mdbootstrap.com/education/bootstrap/' %}'" target="_blank"> QCoder.kz </a>
+      <a href="https://mdbootstrap.com/education/bootstrap/" target="_blank"> QCoder.kz </a>
     </div>
     <!--/.Copyright-->
 
