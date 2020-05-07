@@ -31,6 +31,8 @@ class TaskLinks(models.Model):
 
 class Assignments(models.Model):
     grade = models.FloatField(default=0.0, null=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True)
+    task = models.ForeignKey(Task, on_delete=models.CASCADE, null=True)
 
 class AssignmentLinks(models.Model):
     link = models.CharField(max_length=4096) 
