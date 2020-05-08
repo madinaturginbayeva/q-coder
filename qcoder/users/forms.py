@@ -3,7 +3,6 @@ from django.contrib.auth.models import User, Group
 from django import forms
 
 class UserRegisterForm(UserCreationForm):
-    GROUPS = (('Teacher', 'Teacher'),('Student', 'Student'),)
     email = forms.EmailField()
     group = forms.ModelChoiceField(queryset=Group.objects.all(), required=True)
 
