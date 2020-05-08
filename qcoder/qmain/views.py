@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Course
+from .models import Course, Student
 from django.contrib import messages
 from users.forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
