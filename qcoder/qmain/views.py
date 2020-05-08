@@ -4,6 +4,7 @@ from django.contrib import messages
 from users.forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
+from users.models import Teacher, Student
 
 import os
 from pdf2image import convert_from_path
@@ -26,10 +27,15 @@ def main(request):
         if form.is_valid():
             user = form.save()
             group = form.cleaned_data['group']
+            if group.name == 'Teacher':
+                    Teacher.objects.create(user=user)
+            elif group.name == 'Student':
+                    Student.objects.create(user=user)
             user.groups.add(group)
+            user.save()
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!')
-            return redirect('/')
+            return redirect('login')
     else:
         form = UserRegisterForm()
     return render(request, 'qmain/landing.html', {'form': form})
@@ -78,6 +84,6 @@ def pdf_splitter(path):
             img_cv = cv2.imread(image_name2)
             img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
             new =pytesseract.image_to_string(img_rgb)
-            file1 =io.open('diploma/{}_page_{}.txt'.format(fname, page+1),"a",encoding="utf-8")
+            file1 = io.open('diploma/{}_page_{}.txt'.format(fname, page+1),"a",encoding="utf-8")
             file1.write(new)
             file1.close()

@@ -13,7 +13,7 @@ class Course(models.Model):
     term = models.CharField(max_length=32, choices=SEMESTERS)
     year = models.IntegerField()
     entry_code = models.CharField(max_length=16)
-    lector = models.ForeignKey(Teacher, on_delete=models.CASCADE)
+    lector = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True)
     students = models.ManyToManyField(Student)
     
     def __str__(self):
