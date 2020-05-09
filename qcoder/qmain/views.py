@@ -92,7 +92,7 @@ def check_exam(request):
                 if User.objects.filter(last_name=student_id_text).exists():
                     #tesseract converts handwriting to txx file 
                     img_cv = cv2.imread(image_name2)
-                    img_rgb = cv2.cv   tColor(img_cv, cv2.COLOR_BGR2RGB)
+                    img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
                     new =pytesseract.image_to_string(img_rgb)
                     true_answers = open('media/RightAnswers.txt').read()
                     m = SequenceMatcher(None, new, true_answers) #insert mark
