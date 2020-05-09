@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Course, Student
+from .models import Course, Student, Task
 from django.contrib import messages
 from users.forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from users.models import Teacher, Student
-
+from .forms import CourseForm
 import os
 import io 
 from pdf2image import convert_from_path
@@ -42,12 +42,33 @@ def main(request):
         form = UserRegisterForm()
     return render(request, 'qmain/landing.html', {'form': form})
 
+@login_required
 def courses(request):
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            print('YES')
+            course = form.save()
+            course.lector = Teacher.objects.get(user = request.user)
+            course.save()
+        else:
+            print('NO')
+
+    try:
+        courses = Course.objects.filter(lector=Teacher.objects.get(user = request.user))
+    except Course.DoesNotExist:
+        courses = None
     context = {
-        'courses' : Course.objects.all(),
-        'title' : 'Courses'
+        'courses' : courses,
+        'title' : 'Courses',
+        'form': CourseForm(),
+        'user_is_teacher': is_member(request.user)
     }
     return render(request, 'qmain/courses.html', context)
+
+def is_member(user):
+    return user.groups.filter(name='Teacher').exists()
+
 @login_required
 def assignments(request):
     return render(request, 'qmain/assignments.html', {'title':'Assignments'})
@@ -55,8 +76,9 @@ def assignments(request):
 def students(request):
     return render(request, 'qmain/students.html', {'title':'Student'})
 @login_required
-def course(request):
-    return render(request, 'qmain/course.html', {'title':'Course'})
+def course(request, id):
+    tasks = Task.objects.filter(course_id=Course.objects.get(id=id))
+    return render(request, 'qmain/course.html', {'title':'Tasks', 'tasks':tasks})
 
 @login_required
 def check_exam(request):

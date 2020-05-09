@@ -10,9 +10,9 @@ class Course(models.Model):
     name = models.CharField(max_length=256)
     code = models.CharField(max_length=128)
     description = models.TextField()
-    term = models.CharField(max_length=32, choices=SEMESTERS)
-    year = models.IntegerField()
-    entry_code = models.CharField(max_length=16)
+    term = models.CharField(max_length=32, choices=SEMESTERS, null=True)
+    year = models.IntegerField(null=True)
+    entry_code = models.CharField(max_length=16, null=True)
     lector = models.ForeignKey(Teacher, on_delete=models.CASCADE, null=True)
     students = models.ManyToManyField(Student)
     

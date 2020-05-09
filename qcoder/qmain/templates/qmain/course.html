@@ -1,4 +1,23 @@
 {% extends "qmain/base_in_course.html" %}
 {% block content %}
-    <h1>Courses</h1>
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Deadline</th>
+          </tr>
+        </thead>
+        <tbody>    
+        {% for task in tasks %}
+          <tr>
+            <th scope="row">{{ task.id }}</th>
+            <td>{{ task.title }}</td>
+            <td>{{ task.description }}</td>
+            <td>{{ task.deadline }}</td>
+          </tr>  
+        {% endfor %}
+        </tbody>
+      </table>
 {% endblock content %}
