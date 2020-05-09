@@ -73,12 +73,13 @@ def is_member(user):
 def assignments(request):
     return render(request, 'qmain/assignments.html', {'title':'Assignments'})
 @login_required
-def students(request):
-    return render(request, 'qmain/students.html', {'title':'Student'})
+def students(request, id):
+    students = Student.objects.filter(course_id=Course.objects.get(id=id))
+    return render(request, 'qmain/students.html', {'title':'Students', 'students':students, 'course_id':id})
 @login_required
 def course(request, id):
     tasks = Task.objects.filter(course_id=Course.objects.get(id=id))
-    return render(request, 'qmain/course.html', {'title':'Tasks', 'tasks':tasks, 'course_id':course_id})
+    return render(request, 'qmain/course.html', {'title':'Tasks', 'tasks':tasks, 'course_id':id})
 
 @login_required
 def check_exam(request):
