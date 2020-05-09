@@ -6,5 +6,6 @@ urlpatterns = [
     path('courses', views.courses, name='courses'),
     path('assignments', views.assignments, name='assignments'),
     path('students', views.students, name='students'),
-    path('course', views.course, name='course')
+    path('course', views.course, name='course'),
+    path('exams', views.check_exam, name='exams'),
 ]

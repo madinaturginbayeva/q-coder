@@ -1,0 +1,32 @@
+{% extends "qmain/base_in_course.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-lg-3 col-md-6"></div>
+        <div class="col-lg-8 col-md-6">
+            <div class="card">
+                <div class="card-header rounded-top info-color-dark text-center pt-3">
+                    <h4 class=" white-text text-center">Exam Check</h2>
+                </div>
+                <div class="card-body mx-4">    
+                <p class="text-center">Please upload file</6>
+                <form action="exams" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
+                        </div>
+                        <div class="custom-file">
+                        <input type="file" class="custom-file-input" id="inputGroupFile01"
+                            aria-describedby="inputGroupFileAddon01">
+                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <button class="btn btn-info my-4 btn-block" type="submit">Check</button>
+                    </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

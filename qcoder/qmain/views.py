@@ -7,6 +7,7 @@ from django.contrib.auth.models import User, Group
 from users.models import Teacher, Student
 
 import os
+import io 
 from pdf2image import convert_from_path
 from pdf2image.exceptions import (
     PDFInfoNotInstalledError,
@@ -16,7 +17,8 @@ from pdf2image.exceptions import (
 import cv2
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from pytesseract import pytesseract
-import io 
+from difflib import SequenceMatcher
+from PIL import Image
 pytesseract.tesseract_cmd = 'C:\Program Files\Tesseract-OCR\\tesseract'
 
 
@@ -46,44 +48,57 @@ def courses(request):
         'title' : 'Courses'
     }
     return render(request, 'qmain/courses.html', context)
-
+@login_required
 def assignments(request):
     return render(request, 'qmain/assignments.html', {'title':'Assignments'})
-
+@login_required
 def students(request):
     return render(request, 'qmain/students.html', {'title':'Student'})
-
+@login_required
 def course(request):
     return render(request, 'qmain/course.html', {'title':'Course'})
 
-
-
-def pdf_splitter(path):
-    fname = os.path.splitext(os.path.basename(path))[0]
-    pdf = PdfFileReader(path)
-    
-    #split pdf file to multiple pds
-    for page in range(pdf.getNumPages()):
-        pdf_writer = PdfFileWriter()
-        pdf_writer.addPage(pdf.getPage(page))
-        output_filename = 'diploma/{}_page_{}.pdf'.format(
-            fname, page+1)
-        with open(output_filename, 'wb') as out:
-            pdf_writer.write(out)
-        print('Created: {}'.format(output_filename))
+@login_required
+def check_exam(request):
+    if request.method == 'POST':
+        path = 'media/diploma.pdf'
+        fname = os.path.splitext(os.path.basename(path))[0]
+        pdf = PdfFileReader(path)
         
-    #convert pdf to png, because tesseracts workd only with png file 
-    for page in range(pdf.getNumPages()):
-        images = convert_from_path('diploma/{}_page_{}.pdf'.format(
-            fname, page+1))
-        for image in images:
-            image.save('diploma/{}_page_{}.png'.format(fname, page+1),'PNG')
-            image_name2 = 'diploma/{}_page_{}.png'.format(fname, page+1)
+        #split pdf file to multiple pds
+        for page in range(pdf.getNumPages()):
+            pdf_writer = PdfFileWriter()
+            pdf_writer.addPage(pdf.getPage(page))
+            output_filename = 'media/diploma/{}_page_{}.pdf'.format(
+                fname, page+1)
+            with open(output_filename, 'wb') as out:
+                pdf_writer.write(out)
+            #print('Created: {}'.format(output_filename))
             
-            #tesseract converts handwriting to txx file 
-            img_cv = cv2.imread(image_name2)
-            img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
-            new =pytesseract.image_to_string(img_rgb)
-            file1 = io.open('diploma/{}_page_{}.txt'.format(fname, page+1),"a",encoding="utf-8")
-            file1.write(new)
-            file1.close()
+        #convert pdf to png, because tesseracts workd only with png file 
+        for page in range(pdf.getNumPages()):
+            images = convert_from_path('media/diploma/{}_page_{}.pdf'.format(
+                fname, page+1))
+            for image in images:
+                image.save('media/diploma/{}_page_{}.png'.format(fname, page+1),'PNG')
+                image_name2 = 'media/diploma/{}_page_{}.png'.format(fname, page+1)
+                #crop name or id
+                img = Image.open(image_name2)
+                student_id = img.crop((430, 0, 920, 276))
+                student_id.save('media/diploma/student_{}.png'.format(page+1))
+                img_cv = cv2.imread('media/diploma/student_{}.png'.format(page+1))
+                student_id_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
+                student_id_text =pytesseract.image_to_string(student_id_rgb)
+                if User.objects.filter(last_name=student_id_text).exists():
+                    #tesseract converts handwriting to txx file 
+                    img_cv = cv2.imread(image_name2)
+                    img_rgb = cv2.cv   tColor(img_cv, cv2.COLOR_BGR2RGB)
+                    new =pytesseract.image_to_string(img_rgb)
+                    true_answers = open('media/RightAnswers.txt').read()
+                    m = SequenceMatcher(None, new, true_answers) #insert mark
+                    mark = m.ratio()*1388 #insert markz
+                    print(mark)
+        return  render(request, 'qmain/check_exam.html', {'title':'Exam check'})
+    elif request.method == 'GET':
+        return  render(request, 'qmain/check_exam.html', {'title':'Exam check'})
+
