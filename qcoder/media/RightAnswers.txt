@@ -1,0 +1,177 @@
+1 задача
+
+$x=$_GET[x];
+$y=$_GET[y];
+$z=$_GET[z];
+if ($x>$y & $x>$z){
+    echo $x;
+    }
+else if ($y>$x & $y>$z){
+    echo $y;
+    }
+else if ($z>$x & $z>$y){
+    echo $z;
+    }
+
+$x=$REQUEST['x'];
+$y=$REQUEST['y'];
+$z=$REQUEST['z'];
+if ($x>=$y && $x>=$z){
+    echo $x;
+    }
+else if ($y>=$x && $y>=$z){
+    echo $y;
+else{
+    echo $z;
+    }
+
+
+if ($_REQUEST["x"]>$_REQUEST["y"] && $_REQUEST["x"]>$_REQUEST["z"]){
+    echo($_REQUEST["x"]);}
+else if ($_REQUEST["y"]>$_REQUEST["x"] && $_REQUEST["y"]>$REQUEST["z"]){
+    echo($_REQUEST["y"]);}
+else if ($_REQUEST["z"]>$_REQUEST["x"] && $_REQUEST["z"]>$REQUEST["y"]){
+    echo($_REQUEST["z"]);}
+
+echo max(parseInt($_GET['x']), parseInt($_GET['y']), parseInt($_GET['z']));
+_______________________________________________________________________________
+2 задача
+
+for ($i=0; $i<1000; $i++){
+    if($i%2==0){
+        echo $i;
+    }
+}
+
+
+for ($i=2; $i<1000; $+=2){echo $i." "}
+
+
+$x=0
+while ($x<1000){
+    if($x%2==0){echo($x)}
+    $x++;}
+_______________________________________________________________________________
+3 задача
+
+foreach($lessons as $i){
+    if($i=='Algebra'){echo(<div><img src='image.png'/><strong>$i</strong></div>)
+    else if($i=='Calculus'){echo(<div><strong>$i</strong><img src='image.png'/></div>)
+    else if($i=='Java'){echo(<div><img src='image.png'/><strong>$i</strong></div>)
+
+foreach($lessons as $i){
+    if($i=='Algebra'){echo(<div><img src='image.png'/><strong>$i</strong></div>)
+    else if($i=='Calculus'){echo(<div><strong>$i</strong><img src='image.png'/></div>)
+    else{echo(<div><img src='image.png'/><strong>$i</strong></div>)
+
+for($i=0; $i<count($lessons);$i++){
+    if($i==0){
+        echo(<div><img src='image.png'/><strong>$i</strong></div>}
+    if($i==1){
+        echo(<div><strong>$i</strong><img src='image.png'/></div>)}
+    if($i==2){
+        echo(<div><img src='image.png'/><strong>$i</strong></div>)}
+
+
+foreach($lessons as $i){
+    if($i!='Calculus'){echo(<div><img src='image.png'/><strong>$i</strong></div>)
+    else{echo(<div><strong>$i</strong><img src='image.png'/></div>)
+
+_______________________________________________________________________________
+4 задача
+
+setcookie = ("token", "user", time()+1):
+if($_cookie=="token"){
+    $_session=="user";
+    $__session=1;}
+
+if(in_array("token", $_cookie)){
+    session_start();
+    $_session["user"]="1";}
+
+
+if (isset($_cookie["token"])){
+    session_start();
+    $_session["user"]="1";
+    session_close();}
+_______________________________________________________________________________
+5 задача
+
+$servername="localhost";
+$username="root";
+$password="root";
+$dbnmame="myDb";
+$conn=mysqli_connect($servername, $username, $password, $dbnmame);
+$sql=select * from 'employee' where 'id'>50;
+$result=mysqli_query($conn, $sql);
+if ($result>0){
+    while($result>0){
+        echo $result['id']."_".$result['name']."_".$result['surname']."_".$result['title']."<br>";
+        $result--;}}
+
+$conn=mysqli_connect("localhost", "username", " ", "myDB");
+$sql="select * from 'employee' where 'id'>50";
+$result=mysqli_query($conn, $sql);
+while($row=mysql_fetch_assoc($result)){
+    echo $row["id"].", ".$row["name"]." ".$row["surname"].", ".$row["title"]:}
+mysqli_close($conn);
+
+$mysql=$new mysqli(" ", " ", " ")
+$sql="select * from 'employee' where 'id'>50";
+$result=mysql->query($sql);
+if($result==true){
+    while($row->mysql_fetch_assoc($result)){
+        print_r($row);
+        echo($row("it",$row["name"],$row["surname"],$row["title"]));}}
+
+
+_______________________________________________________________________________
+1 задача 2 варик
+
+echo ($_REQUEST["s1"]+$_REQUEST["s2"])
+_______________________________________________________________________________
+2 задача 2 варик
+
+for($i=0; $i<1000; $i++){
+    echo "Hello"}
+_______________________________________________________________________________
+3 задача 2 варик
+
+echo "<strong>"$lessons[0]"</strong><br/>"
+echo "<strong>"$lessons[1]"</strong><br/>"
+echo "<strong>"$lessons[2]"</strong><br/>"
+
+
+for($i=0; $i=lessons.length; $i++){
+    $result="<strong>"$lessons[0]"</strong><br/>"
+    echo $result}
+
+
+foreach($lessons as $x){
+    echo "<strong>"$lessons[2]"</strong><br/>"}
+
+_______________________________________________________________________________
+4 задача 2 варик
+
+session_start();
+$_session["username"]="andrewng";
+
+isset($_cookie["basket"])
+
+
+_______________________________________________________________________________
+5 задача 2 варик
+$con = $_mysqli_connecнt("localhost"," "," ","employees");
+if (!$con){ echo "no connection"}
+else{
+    $data=mysqli_query("select * from employees");
+    echo $data["id"];
+    echo $data["name"];
+    echo $data["surname"];
+    echo $data["title"];}
+
+
+
+$mysqli=$mysqli("localhost, root")
+echo ($mysqli->("select * from employees");
+
