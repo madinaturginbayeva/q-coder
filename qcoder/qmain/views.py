@@ -78,7 +78,7 @@ def students(request):
 @login_required
 def course(request, id):
     tasks = Task.objects.filter(course_id=Course.objects.get(id=id))
-    return render(request, 'qmain/course.html', {'title':'Tasks', 'tasks':tasks})
+    return render(request, 'qmain/course.html', {'title':'Tasks', 'tasks':tasks, 'course_id':course_id})
 
 @login_required
 def check_exam(request):

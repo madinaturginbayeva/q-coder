@@ -75,8 +75,10 @@
       </a>
 
       <div class="list-group list-group-flush">
-        <a href="{% url 'assignments' %}" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-user mr-3"></i>Assignments</a>
+        <a href="{% url 'courses' %}" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-user mr-3"></i>Courses</a>
+        <a href="{% url 'course' course_id%}" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-user mr-3"></i>Tasks</a>
         <a href="{% url 'students' %}" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-table mr-3"></i>Students</a>
       </div>
