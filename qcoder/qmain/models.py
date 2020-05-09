@@ -19,11 +19,15 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+class TaskType(models.Model):
+    type_name = models.CharField(max_length=256)    
+
 class Task(models.Model):
     title = models.CharField(max_length=256)
     description = models.TextField()
     deadline = models.DateTimeField()
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    task_type = models.ForeignKey(TaskType, on_delete=models.CASCADE, null=True)
 
 class TaskLinks(models.Model):
     link = models.CharField(max_length=4096) 
