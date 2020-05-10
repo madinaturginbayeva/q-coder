@@ -1,0 +1,52 @@
+{% extends "qmain/base.html" %}
+{% block content %}
+<div class="container-fluid mt-5">
+    <div class="row wow fadeIn">
+      <div class="col-md-12 mb-6">
+        <div class="wrapper-editor">
+            <div class="d-flex justify-content-center buttons-wrapper my-3">
+                <button class="btn btn-rounded text-white blue darken-3 btn-sm add-content-edit" type="button"><i class="fas fa-toggle-off"></i></button>
+                <button class=" btn btn-rounded text-white purple lighten-2 btn-sm add-new-row" type="button"  data-toggle="modal" data-target="#modalRegisterForm"><i class="fas fa-plus"></i></button>
+                <button class="btn btn-rounded text-white red btn-sm remove-first-tr" type="button"> <i class="fas fa-eraser"></i></button>
+            </div>
+            
+            <table id="contentEx" class="table table-striped display" cellspacing=" 0" width="100%">
+                <thead>
+                <tr>
+                    <th scope="th-sm">Id</th>
+                    <th scope="th-sm">Title</th>
+                    <th scope="th-sm">Description</th>
+                    <th scope="th-sm">Deadline</th>
+                    <th scope="th-sm">Type</th>
+                    <th scope="th-sm">See</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for assignment in assignments %}
+                <tr>
+                    <th scope="row">{{ assignment.id }}</th>
+                    <td>{{ assignment.student.user.first_name }}</td>
+                    <td>{{ assignment.student.user.last_name }}</td>
+                    <td>{{ assignment.student.student_id }}</td>
+                    <td>{{ assignment.grade }}</td>
+                    <td>{{ assignment.task.title }}</td>
+                    <td>{{ assignment.task.task_type.type_name}}</td>
+                </tr>  
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                <tr>
+                    <th scope="th-sm">Id</th>
+                    <th scope="th-sm">Title</th>
+                    <th scope="th-sm">Description</th>
+                    <th scope="th-sm">Deadline</th>
+                    <th scope="th-sm">Type</th>
+                    <th scope="th-sm">See</th>
+                </tr>
+                </tfoot>
+            </table>
+        </div> 
+      </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,32 +1,80 @@
-{% extends "qmain/base_in_course.html" %}
+{% extends "qmain/base.html" %}
 {% block content %}
-    <div class="row">
-        <div class="col-lg-3 col-md-6"></div>
-        <div class="col-lg-8 col-md-6">
-            <div class="card">
-                <div class="card-header rounded-top info-color-dark text-center pt-3">
-                    <h4 class=" white-text text-center">Exam Check</h2>
-                </div>
-                <div class="card-body mx-4">    
-                <p class="text-center">Please upload file</6>
-                <form action="exams" method="POST">
-                    {% csrf_token %}
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                        <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
-                        </div>
-                        <div class="custom-file">
-                        <input type="file" class="custom-file-input" id="inputGroupFile01"
-                            aria-describedby="inputGroupFileAddon01">
-                        <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-                        </div>
+<div class="modal fade" id="modalCheckForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="card">
+            <div class="card-header mdb-color text-center pt-3">
+                <h4 class=" white-text text-center">Exam Check</h2>
+            </div>
+            <div class="card-body mx-4">    
+            <p class="text-center">Please upload file</6>
+            <form method="POST">
+                {% csrf_token %}
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
                     </div>
-                    <div class="input-group">
-                        <button class="btn btn-info my-4 btn-block" type="submit">Check</button>
+                    <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="inputGroupFile01"
+                        aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
                     </div>
-                </form>
                 </div>
+                <div class="input-group">
+                    <button class="btn mdb-color my-4 btn-block white-text" type="submit">Check</button>
+                </div>
+            </form>
             </div>
         </div>
     </div>
+  </div>
+</div>
+<div class="container-fluid mt-5">
+    <div class="row wow fadeIn">
+        <div class="col-md-12 mb-6">
+            <div class="wrapper-editor">
+                <div class="d-flex justify-content-center buttons-wrapper my-3">
+                  <button class=" btn btn-rounded text-white purple lighten-2 btn-sm add-new-row" type="button"  data-toggle="modal" data-target="#modalCheckForm"><i class="fas fa-file-upload"></i></button>
+               </div>
+                
+                <table id="contentEx" class="table table-striped display" cellspacing=" 0" width="100%">
+                    <thead>
+                    <tr>
+                        <th scope="th-sm">Id</th>
+                        <th scope="th-sm">Student info</th>
+                        <th scope="th-sm">Student id</th>
+                        <th scope="th-sm">Grade</th>
+                        <th scope="th-sm">Task title</th>
+                        <th scope="th-sm">Task type</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for assignment in assignments %}
+                    <tr>
+                        <th scope="row">{{ assignment.id }}</th>
+                        <td>{{ assignment.student.user.first_name }} {{ assignment.student.user.last_name }}</td>
+                        <td>{{ assignment.student.student_id }}</td>
+                        <td>{{ assignment.grade }}</td>
+                        <td>{{ assignment.task.title }}</td>
+                        <td>{{ assignment.task.task_type.type_name}}</td>
+                    </tr>  
+                    {% endfor %}
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <th scope="th-sm">Id</th>
+                        <th scope="th-sm">Title</th>
+                        <th scope="th-sm">Description</th>
+                        <th scope="th-sm">Deadline</th>
+                        <th scope="th-sm">Type</th>
+                        <th scope="th-sm">See</th>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div> 
+        </div>
+    </div>
+</div>
 {% endblock content %}

@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Course, Student, Task
+from .models import Course, Student, Task, Assignments
 from django.contrib import messages
 from users.forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from users.models import Teacher, Student
-from .forms import CourseForm
+from .forms import CourseForm, TaskForm
 import random
 import string
 import os
@@ -49,14 +49,10 @@ def courses(request):
     if request.method == 'POST':
         form = CourseForm(request.POST)
         if form.is_valid():
-            print('YES')
             course = form.save()
             course.lector = Teacher.objects.get(user = request.user)
             course.entry_code = random_entry_code()
             course.save()
-        else:
-            print('NO')
-
     try:
         courses = Course.objects.filter(lector=Teacher.objects.get(user = request.user))
     except Course.DoesNotExist:
@@ -80,22 +76,31 @@ def random_entry_code():
 @login_required
 def assignments(request):
     return render(request, 'qmain/assignments.html', {'title':'Assignments'})
+
 @login_required
 def students(request, id):
     students = Course.objects.get(id=id).students.all()
     return render(request, 'qmain/students.html', {'title':'Students', 'students':students, 'course_id':id})
 @login_required
 def course(request, id):
+    if request.method == 'POST':
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            task = form.save(commit=False)
+            task.course_id = id
+            task.save()
+        else:
+            print('NO')
+    form = TaskForm()
     tasks = Task.objects.filter(course_id=Course.objects.get(id=id))
-    return render(request, 'qmain/course.html', {'title':'Tasks', 'tasks':tasks, 'course_id':id})
+    return render(request, 'qmain/course.html', {'title':'Tasks', 'tasks':tasks, 'course_id':id, 'form':form})
 
 @login_required
-def check_exam(request):
+def check_exam(request, course_id, task_id):
     if request.method == 'POST':
         path = 'media/diploma.pdf'
         fname = os.path.splitext(os.path.basename(path))[0]
         pdf = PdfFileReader(path)
-        
         #split pdf file to multiple pds
         for page in range(pdf.getNumPages()):
             pdf_writer = PdfFileWriter()
@@ -120,7 +125,7 @@ def check_exam(request):
                 img_cv = cv2.imread('media/diploma/student_{}.png'.format(page+1))
                 student_id_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
                 student_id_text =pytesseract.image_to_string(student_id_rgb)
-                if User.objects.filter(last_name=student_id_text).exists():
+                if User.objects.filter(groups__name='Student').filter(last_name=student_id_text).exists():
                     #tesseract converts handwriting to txx file 
                     img_cv = cv2.imread(image_name2)
                     img_rgb = cv2.cvtColor(img_cv, cv2.COLOR_BGR2RGB)
@@ -128,8 +133,11 @@ def check_exam(request):
                     true_answers = open('media/RightAnswers.txt').read()
                     m = SequenceMatcher(None, new, true_answers) #insert mark
                     mark = m.ratio()*1388 #insert markz
-                    print(mark)
-        return  render(request, 'qmain/check_exam.html', {'title':'Exam check'})
-    elif request.method == 'GET':
-        return  render(request, 'qmain/check_exam.html', {'title':'Exam check'})
+                    Assignments.objects.create(grade=mark, task=Task.objects.get(id=task_id), student=Student.objects.get(user= User.objects.filter(groups__name='Student').filter(last_name=student_id_text).first()))
+    assignments = Assignments.objects.filter(task_id=task_id)
+    return  render(request, 'qmain/check_exam.html', {'title':'Exam check', 'course_id':course_id, 'task_id':task_id, 'assignments':assignments})
 
+@login_required
+def task(request, course_id, task_id):
+    assignments = Assignments.objects.filter(task_id=task_id)
+    return  render(request, 'qmain/task.html', {'title':'Task assignmets', 'course_id':course_id, 'assignments':assignments})
