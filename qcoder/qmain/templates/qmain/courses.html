@@ -15,9 +15,7 @@
         {% endif %}
       </h4>
       {% if user_is_teacher %}
-      <div class="text-center">
-        <button class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#createCourseModal" id="formButton">Create New Course</button>
-      </div>
+        <button class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target="#createCourseModal" id="formButton">Create New Course</button>
       {% endif %}
     </div>
 
@@ -35,11 +33,10 @@
         
         {% for course in courses %}
         <!--Grid column-->
-        <div class="col-md-6 mb-4">
+        <div class="col-md-4 mb-2">
 
           <!-- Card -->
           <div class="card gradient-card">
-
               <div class="card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
 
                 <!-- Content -->
@@ -47,7 +44,12 @@
                   <div class="text-white d-flex h-100 mask aqua-gradient-rgba">
                     <div class="first-content align-self-center p-3">
                       <h3 class="card-title">{{ course.name }}</h3>
-                      <p class="lead mb-0">{{ course.code }}</p>
+                      <p class="lead md-0">Course code: {{ course.code }}</p>
+                      <p class="card-text">Entry code: 
+                        {% if course.entry_code %}
+                        <span>{{ course.entry_code }}</span>
+                        {% endif %}
+                      </p>
                     </div>
                   </div>
                 </a>

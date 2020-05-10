@@ -6,6 +6,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from users.models import Teacher, Student
 from .forms import CourseForm
+import random
+import string
 import os
 import io 
 from pdf2image import convert_from_path
@@ -50,6 +52,7 @@ def courses(request):
             print('YES')
             course = form.save()
             course.lector = Teacher.objects.get(user = request.user)
+            course.entry_code = random_entry_code()
             course.save()
         else:
             print('NO')
@@ -69,12 +72,17 @@ def courses(request):
 def is_member(user):
     return user.groups.filter(name='Teacher').exists()
 
+def random_entry_code():
+    letters = string.ascii_lowercase + string.ascii_uppercase + string.digits
+    rnd= ''.join(random.choice(letters) for i in range(8))
+    return rnd
+
 @login_required
 def assignments(request):
     return render(request, 'qmain/assignments.html', {'title':'Assignments'})
 @login_required
 def students(request, id):
-    students = Student.objects.filter(course_id=Course.objects.get(id=id))
+    students = Course.objects.get(id=id).students.all()
     return render(request, 'qmain/students.html', {'title':'Students', 'students':students, 'course_id':id})
 @login_required
 def course(request, id):
