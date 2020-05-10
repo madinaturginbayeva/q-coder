@@ -2,29 +2,27 @@
 {% block content %}
 
 <div class="container-fluid mt-5">
-
   <!-- Heading -->
-  <div class="card mb-4 wow fadeIn">
-
-    <!--Card content-->
+  <!-- <div class="card mb-4 wow fadeIn">
     <div class="card-body d-sm-flex justify-content-between">
-
-      <h4 class="mb-2 mb-sm-0 pt-1">
+      <h5 class="">
         {% if title %}
-        <span>{{ title }}</span>
+          {{ title }}
         {% endif %}
-      </h4>
+      </h5>
       {% if user_is_teacher %}
-        <button class="btn btn-primary btn-rounded mb-4" data-toggle="modal" data-target="#createCourseModal" id="formButton">Create New Course</button>
+        <button class="btn btn-flat" data-toggle="modal" data-target="#createCourseModal" id="formButton">Create New Course</button>
       {% endif %}
     </div>
-
-  </div>
+  </div> -->
   <!-- Heading -->
 
   <!--Grid row-->
   <div class="row wow fadeIn">
 
+    {% if user_is_teacher %}
+      <button class="btn btn-danger mx-3 my-3" data-toggle="modal" data-target="#createCourseModal" id="formButton">Create New Course</button>
+    {% endif %}
     <!--Grid column-->
     <div class="col-md-12 mb-6">
       
@@ -37,11 +35,11 @@
 
           <!-- Card -->
           <div class="card gradient-card">
-              <div class="card-image" style="background-image: url(https://mdbootstrap.com/img/Photos/Horizontal/Work/4-col/img%20%2814%29.jpg);">
+              <div class="card-image">
 
                 <!-- Content -->
                 <a href="{% url 'course' course.id %}">
-                  <div class="text-white d-flex h-100 mask aqua-gradient-rgba">
+                  <div class="text-dark d-flex h-100 mask">
                     <div class="first-content align-self-center p-3">
                       <h3 class="card-title">{{ course.name }}</h3>
                       <p class="lead md-0">Course code: {{ course.code }}</p>

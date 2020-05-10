@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -28,6 +27,10 @@
       body{
         font-family: 'Roboto', sans-serif;
       }
+      .bc-icons-2 .breadcrumb-item + .breadcrumb-item::before {
+        content: none; }
+      .bc-icons-2 .breadcrumb-item.active {
+        color: #455a64; }
     </style>
 </head>
 <body>
@@ -35,7 +38,7 @@
   <header>
 
     <!-- Navbar -->
-    <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <nav class="navbar fixed-top navbar-expand-md navbar-dark mdb-color scrolling-navbar">
       <div class="container-fluid">
 
         <!-- Collapse -->
@@ -43,7 +46,23 @@
           aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
+        <div class="mr-auto bc-icons-2">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a>
+                  Courses
+                </a>
+                <i class="fas fa-caret-right mx-2" aria-hidden="true"></i>
+              </li>
+              <li class="breadcrumb-item">
+                {% if title %}
+                  {{ title }}
+                {% endif %}
+              </li>
+            </ol>
+          </nav>
+        </div>
         <!-- Links -->
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <!-- Right -->
@@ -69,21 +88,21 @@
     <!-- Navbar -->
 
     <!-- Sidebar -->
-    <div class="sidebar-fixed position-fixed">
+    <div class="sidebar-fixed position-fixed mdb-color">
 
-      <a class="logo-wrapper waves-effect" style="font-size: 30px; font-weight: 900; color:dodgerblue;">
+      <a class="logo-wrapper waves-effect" style="font-size: 30px; font-weight: 900; color:white;">
         Q-Coder
       </a>
       
       <div class="list-group list-group-flush">
-        <a href="{% url 'courses' %}" class="list-group-item active waves-effect">
+        <a href="{% url 'courses' %}" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-chart-pie mr-3"></i>Courses
         </a>
       {% ifnotequal title 'Courses' %}
         <a href="{% url 'course' course_id %}" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-user mr-3"></i>Tasks</a>
+          <i class="fas fa-table mr-3"></i>Tasks</a>
         <a href="{% url 'students' course_id %}" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-table mr-3"></i>Students</a>
+          <i class="fas fa-user mr-3"></i>Students</a>
       {% endifnotequal %} 
     </div>
     </div>
