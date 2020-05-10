@@ -1,9 +1,5 @@
-{% extends "qmain/base_in_course.html" %}
+{% extends "qmain/base.html" %}
 {% block content %}
-<!-- moi button-->
-<!-- Split button -->
-<!-- Basic dropdown -->
-
 <!--Modal: Login / Register Form-->
 <div class="modal fade" id="modalLRForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog cascading-modal" role="document">
@@ -121,15 +117,39 @@
   </div>
 </div>
 <!--Modal: Login / Register Form-->
+<div class="container-fluid mt-5">
+  <!-- Heading -->
+  <div class="card mb-4 wow fadeIn">
 
-<div class="text-center">
-  <a href="" class="btn btn-danger btn-rounded my-3" data-toggle="modal" data-target="#modalLRForm">Add Task</a>
-</div>
+    <!--Card content-->
+    <div class="card-body d-sm-flex justify-content-between">
 
+      <h4 class="mb-2 mb-sm-0 pt-1">
+        {% if title %}
+        <span>{{ title }}</span>
+        {% endif %}
+      </h4>
 
+      <form class="d-flex justify-content-center">
+        <!-- Default input -->
+        <input type="search" placeholder="Type your query" aria-label="Search" class="form-control">
+        <button class="btn btn-primary btn-sm my-0 p" type="submit">
+          <i class="fas fa-search"></i>
+        </button>
 
+      </form>
 
-    <table class="table table-bordered">
+    </div>
+
+  </div>
+  <!-- Heading -->
+  <div class="row wow fadeIn">
+    <!--Grid column-->
+    <div class="col-md-12 mb-6">
+      <div class="text-center">
+        <a href="" class="btn btn-danger btn-rounded my-3" data-toggle="modal" data-target="#modalLRForm">Add Task</a>
+      </div>
+      <table class="table table-bordered">
         <thead>
           <tr>
             <th scope="col">Id</th>
@@ -148,6 +168,8 @@
           </tr>  
         {% endfor %}
         </tbody>
-      </table>
-      
+      </table> 
+    </div>
+  </div>
+</div>      
 {% endblock content %}

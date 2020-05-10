@@ -74,13 +74,18 @@
       <a class="logo-wrapper waves-effect" style="font-size: 30px; font-weight: 900; color:dodgerblue;">
         Q-Coder
       </a>
-
+      
       <div class="list-group list-group-flush">
         <a href="{% url 'courses' %}" class="list-group-item active waves-effect">
           <i class="fas fa-chart-pie mr-3"></i>Courses
         </a>
-      </div>
-
+      {% ifnotequal title 'Courses' %}
+        <a href="{% url 'course' course_id %}" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-user mr-3"></i>Tasks</a>
+        <a href="{% url 'students' course_id %}" class="list-group-item list-group-item-action waves-effect">
+          <i class="fas fa-table mr-3"></i>Students</a>
+      {% endifnotequal %} 
+    </div>
     </div>
     <!-- Sidebar -->
 
