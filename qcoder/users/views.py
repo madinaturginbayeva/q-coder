@@ -5,6 +5,11 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User, Group
 from users.models import Student, Teacher
 
+
+"""
+    Registration form of users, when we also create 
+    Student or Teacher models. After registration redirect to login page.
+"""
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -26,14 +31,9 @@ def register(request):
     else:
         return render(request, 'users/register.html', {'form': form})
 
+"""
+    User profile page.
+"""
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
-
-"""
-    print(group)
-    if group == 'Teacher':
-        Teacher.objects.create(user=user, faculty='Engineering', degree='PhD')
-    elif group == 'Student':
-        Student.objects.create(user=user, faculty='Engineering', major='Computer Science')
-"""

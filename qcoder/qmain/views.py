@@ -24,7 +24,9 @@ from PIL import Image
 pytesseract.tesseract_cmd = 'C:\Program Files\Tesseract-OCR\\tesseract'
 
 
-
+"""
+    Main page show landing page with registration form.
+"""
 def main(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -44,6 +46,9 @@ def main(request):
         form = UserRegisterForm()
     return render(request, 'qmain/landing.html', {'form': form})
 
+"""
+    Page of courses list. Have course creating form.
+"""
 @login_required
 def courses(request):
     if request.method == 'POST':
@@ -65,22 +70,36 @@ def courses(request):
     }
     return render(request, 'qmain/courses.html', context)
 
+"""
+    Give permission for creating a courses to the Teacher.
+"""
 def is_member(user):
     return user.groups.filter(name='Teacher').exists()
-
+"""
+    Create random entry code for course.
+"""
 def random_entry_code():
     letters = string.ascii_lowercase + string.ascii_uppercase + string.digits
     rnd= ''.join(random.choice(letters) for i in range(8))
     return rnd
 
+#code which We didn't use)))
 @login_required
 def assignments(request):
     return render(request, 'qmain/assignments.html', {'title':'Assignments'})
 
+"""
+    Page with all student in the course.
+"""
 @login_required
 def students(request, id):
     students = Course.objects.get(id=id).students.all()
     return render(request, 'qmain/students.html', {'title':'Students', 'students':students, 'course_id':id})
+
+"""
+    Page with all tasks in the course.
+    In this page teacher can create a new task.
+"""
 @login_required
 def course(request, id):
     if request.method == 'POST':
@@ -95,6 +114,9 @@ def course(request, id):
     tasks = Task.objects.filter(course_id=Course.objects.get(id=id))
     return render(request, 'qmain/course.html', {'title':'Tasks', 'tasks':tasks, 'course_id':id, 'form':form})
 
+"""
+    Ulzhan's code for checking exams.
+"""
 @login_required
 def check_exam(request, course_id, task_id):
     if request.method == 'POST':
@@ -137,6 +159,9 @@ def check_exam(request, course_id, task_id):
     assignments = Assignments.objects.filter(task_id=task_id)
     return  render(request, 'qmain/check_exam.html', {'title':'Exam check', 'course_id':course_id, 'task_id':task_id, 'assignments':assignments})
 
+"""
+    List of the task assignments.
+"""
 @login_required
 def task(request, course_id, task_id):
     assignments = Assignments.objects.filter(task_id=task_id)
